@@ -1,19 +1,15 @@
-const express = require('express')
+
+const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const cors = require('cors')
-const { PORT } = require('../utils/config')
-const app = express()
-app.use(express.json())
-app.use(cors())
 
 
-app.get('/api/blogs', (request, response) => {
+blogsRouter.get('/', (request, response) => {
   Blog.find({}).then((blogs) => {
     response.json(blogs)
   })
 })
 
-app.post('/api/blogs', (request, response) => {
+blogsRouter.post('/', (request, response) => {
   const blog = new Blog(request.body)
 
   blog.save().then((result) => {
@@ -21,6 +17,4 @@ app.post('/api/blogs', (request, response) => {
   })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+module.exports = blogsRouter
