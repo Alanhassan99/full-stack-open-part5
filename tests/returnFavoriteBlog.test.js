@@ -23,7 +23,7 @@ describe('returnFavoriteBlog', () => {
 
   const emptyList = []
 
-  test('when list is empty', () => {
+  test('when list is empty return the empty list', () => {
     const result = emptyList
     assert.deepEqual(result, emptyList)
   })
