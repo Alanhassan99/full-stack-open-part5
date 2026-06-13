@@ -8,6 +8,7 @@ const app = express()
 
 app.use(express.json())
 app.use('/api/blogs', blogsRouter)
+app.use(middleware.errorHandler)
 
 mongoose
   .connect(config.MONGODB_URI)
@@ -17,7 +18,5 @@ mongoose
   .catch((error) => {
     logger.error('error connection to MongoDB:', error.message)
   })
-
-app.use('/api/blogs', blogsRouter)
 
 module.exports = app
