@@ -6,6 +6,8 @@ const blogsRouter = require('./controllers/blogs')
 const middleware = require('./utils/middleware')
 const app = express()
 
+app.use(express.json())
+app.use('/api/blogs', blogsRouter)
 
 mongoose
   .connect(config.MONGODB_URI)
