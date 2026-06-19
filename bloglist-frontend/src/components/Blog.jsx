@@ -2,7 +2,7 @@ import { useState } from 'react'
 import blogService from '../services/blogs'
 
 
-const Blog = ({ blog, user, handleBlogRemove }) => {
+const Blog = ({ blog, user, handleBlogRemove, onLike }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 4,
@@ -31,20 +31,21 @@ const Blog = ({ blog, user, handleBlogRemove }) => {
       likes: newi
     }
     blogService.put(object)
+    if (onLike) {
+      onLike()
+    }
   }
   const [view, setView] = useState(false)
   if (!view) {
     return (
       <div style={blogStyle}>
-        {blog.title}
-        <button onClick={() => setView(true)}>view</button>
-      </div>
+        <div data-testid="titleAuthorTest">{blog.title} {blog.author}</div><button data-testid="testButton" onClick={() => setView(true)}>view</button></div>
     )
   }
-  else if (view && user.username === blog.user.username) {
+  else if (view && user && user.username === blog.user.username) {
     return (
       <div style={blogStyle}>
-        <div>{blog.title}<button onClick={() => setView(false)}>hide</button></div> <div>{blog.url}</div> <div>likes {likes} <button onClick={handleLike}>like</button></div><div>{blog.author}</div><div><button onClick={handleRemove}>remove</button></div>
+        <div>{blog.title} {blog.author}<button onClick={() => setView(false)}>hide</button></div> <div>{blog.url}</div> <div>likes {likes} <button onClick={handleLike}>like</button></div><div><button onClick={handleRemove}>remove</button></div>
       </div>
 
     )
@@ -53,7 +54,7 @@ const Blog = ({ blog, user, handleBlogRemove }) => {
   else {
     return (
       <div style={blogStyle}>
-        <div>{blog.title}<button onClick={() => setView(false)}>hide</button></div> <div>{blog.url}</div> <div>likes {likes} <button onClick={handleLike}>like</button></div><div>{blog.author}</div>
+        <div>{blog.title} {blog.author} <button onClick={() => setView(false)}>hide</button></div> <div>{blog.url}</div> <div>likes {likes} <button onClick={handleLike}>like</button></div>
       </div>
 
     )
