@@ -14,6 +14,11 @@ app.use('/api/blogs', middleware.userExtractor, blogsRouter)
 app.use('/api/login', loginRouter)
 app.use(middleware.errorHandler)
 
+if (process.env.NODE_ENV === 'test') {
+  console.log('NODE_ENV is:', process.env.NODE_ENV)
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
 
 mongoose
   .connect(config.MONGODB_URI)
