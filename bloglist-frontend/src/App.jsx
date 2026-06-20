@@ -32,7 +32,7 @@ const App = () => {
     setSuccessMessage(`a new blog ${object.title} by ${object.author} added`)
     setTimeout(() => {
       setSuccessMessage(null)
-    }, 5000)
+    }, 1000)
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
